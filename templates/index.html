@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Result Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- FORCE RESET ON REFRESH -->
+<script>
+    window.onload = function () {
+        // Reset all forms on reload
+        document.querySelectorAll("form").forEach(form => form.reset());
+    };
+</script>
+
+<div class="container">
+    <h1>🎓 Student Result Portal</h1>
+
+    <!-- MAIN FORM -->
+    <form method="POST" autocomplete="off">
+        <label>Student Name</label>
+        <input type="text" name="student_name" required>
+
+        <h3>Subjects</h3>
+
+        <div id="subjects">
+            <div class="subject-row">
+                <input type="text" name="subject_name[]" placeholder="Subject Name" required>
+                <input type="number" name="marks[]" placeholder="Marks" required>
+            </div>
+        </div>
+
+        <button type="button" class="btn add" onclick="addSubject()">➕ Add Subject</button>
+        <button type="submit" class="btn calc">📊 Calculate Result</button>
+        <button type="reset" class="btn reset">🔄 Reset</button>
+    </form>
+
+    <!-- ERROR MESSAGE -->
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <!-- RESULT DISPLAY -->
+    {% if result and result.name %}
+        <div class="result">
+            <h3>Result</h3>
+
+            <p><b>Name:</b> {{ result.name }}</p>
+            <p><b>Average:</b> {{ result.average }}%</p>
+            <p><b>Grade:</b> {{ result.grade }}</p>
+            <p><b>Status:</b>
+                <span class="{{ 'pass' if result.status == 'PASS' else 'fail' }}">
+                    {{ result.status }}
+                </span>
+            </p>
+
+            <table>
+                <tr>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                </tr>
+                {% for s in result.subjects %}
+                <tr>
+                    <td>{{ s.subject }}</td>
+                    <td>{{ s.marks }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <!-- PDF DOWNLOAD FORM -->
+            <form action="/download_pdf" method="POST">
+                <input type="hidden" name="name" value="{{ result.name }}">
+                <input type="hidden" name="average" value="{{ result.average }}">
+                <input type="hidden" name="grade" value="{{ result.grade }}">
+
+                {% for s in result.subjects %}
+                    <input type="hidden" name="subjects[]" value="{{ s.subject }}:{{ s.marks }}">
+                {% endfor %}
+
+                <button class="btn pdf">⬇ Download PDF</button>
+            </form>
+        </div>
+    {% endif %}
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+function addSubject() {
+    const row = document.createElement("div");
+    row.className = "subject-row";
+    row.innerHTML = `
+        <input type="text" name="subject_name[]" placeholder="Subject Name" required>
+        <input type="number" name="marks[]" placeholder="Marks" required>
+    `;
+    document.getElementById("subjects").appendChild(row);
+}
+</script>
+
+</body>
+</html>

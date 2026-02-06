@@ -1,0 +1,95 @@
+body {
+    background: linear-gradient(135deg, #fceff9, #e8f0ff);
+    font-family: "Segoe UI", sans-serif;
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+}
+
+.container {
+    background: white;
+    width: 460px;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #dcd6f7;
+    margin-bottom: 12px;
+}
+
+.subject-row {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+.btn.add { background: #cdb4db; }
+.btn.calc { background: #bde0fe; }
+.btn.pdf { background: #caffbf; }
+
+.error {
+    background: #ffe5ec;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.pass { color: green; font-weight: bold; }
+.fail { color: red; font-weight: bold; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.progress-circle {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.progress-circle svg {
+    transform: rotate(-90deg);
+}
+
+.progress-circle circle {
+    fill: none;
+    stroke-width: 10;
+}
+
+.progress-circle circle:first-child {
+    stroke: #eee;
+}
+
+.progress-circle circle:last-child {
+    stroke: #a6b1e1;
+    stroke-dasharray: 314;
+    transition: stroke-dashoffset 1s;
+}
+
+.progress-circle span {
+    position: absolute;
+    top: 45px;
+    font-weight: bold;
+}
